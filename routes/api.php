@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ProductController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,14 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/product', function() {
-  return (new ProductController())->read();
-});
-
-Route::post('/product', function(Request $request) {
-  return (new ProductController())->create(($request));
-});
-
-Route::delete('/product/{id}', function(int $id) {
-  return (new ProductController())->exclude($id);
+Route::controller(ProductController::class)->prefix('product')->group(function() {
+  Route::get('/', 'read');
+  Route::post('/', 'create');
+  Route::delete('/{id}', 'exclude');
 });
